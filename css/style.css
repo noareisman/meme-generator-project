@@ -1,0 +1,125 @@
+@font-face{
+    font-family: impact;
+    src: url(../fonts/impact.ttf);
+}
+
+* {
+    box-sizing: border-box;
+}
+
+body{
+    margin:0;
+}
+
+canvas {
+    border: 1px solid black;
+    display: block;
+    margin: 0 auto;
+}
+
+.img-grid-container{
+    background-color: rgb(220, 238, 191);
+    margin: 0 auto;
+    width: 1300px;
+    height: 500px;
+    border: 1px solid rgb(121, 76, 17);
+    display: flex;
+    align-items: center;
+   
+    display: grid;
+    grid-template-columns:repeat(auto-fit, minmax(100px, 1fr));
+    grid-template-rows: 500px 500px;
+    gap:20px 20px;
+}
+
+.meme-generator-container{
+    background-color: antiquewhite;
+    margin: 0 auto;
+    width: 1300px;
+    height: 500px;
+    border: 1px solid rgb(17, 121, 39);
+    display: flex;
+    align-items: center;
+    
+}
+.canvas-container{
+    background-color: antiquewhite;
+    margin: 0 auto;
+    width: 500px;
+    height: 500px;
+    border: 1px solid rgb(47, 0, 255);
+
+}
+
+.editor-menu-container{
+    background-color: antiquewhite;
+    margin: 0 auto;
+    width: 500px;
+    height: 500px;
+    border: 1px solid red;
+}
+
+
+
+
+html{
+    font-family: lato-reg, sans-serif;
+}
+
+header{
+    background-color: #292929;
+    height: 131px;
+    border-bottom: solid  #1c1c1c; 
+    justify-content: center;
+    /* position: fixed; */
+}
+.main-nav{
+    background-color: #292929;
+    border-bottom: solid #1c1c1c;
+    border-right: 1px solid #1c1c1c;
+    width: 980px;
+}
+
+.nav-bar >* :hover{
+    border-bottom: solid #58C93A;
+    color: #58C93A;
+
+}
+.menu-btn{
+display:none;
+}
+
+.nav-bar > li *{
+    border-left: 1px solid  #1c1c1c;
+    padding:58px 40px;
+    
+    text-decoration: none;
+    font-family: eurofurence, sans-serif;
+    color: #FFFFFF;
+}
+
+.clean-list {
+    margin: 0;
+    padding: 0;
+    list-style-type: none;
+}
+
+.flex{
+    display: flex;
+}
+
+.flex.align-center{
+    align-items: center;
+}
+
+.flex.space-between{
+justify-content: space-between;
+}
+
+.flex.space-around{
+    justify-content: space-around;
+}
+
+.flex.column{
+    flex-direction: column;
+}

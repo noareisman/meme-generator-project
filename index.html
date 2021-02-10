@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Meme Generator</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body onload="init()">
+
+    <main class="main-content">
+        <header class="flex">
+            <nav class="main-nav flex space-between align-center">
+                <div class="logo">MemeGen</div>
+                <ul class="nav-bar clean-list flex">
+                    <li><a href="#">Gallery</a></li>
+                    <li><a href="#">Memes</a></li>
+                    <li><a href="#">About</a></li>
+                </ul>
+                <div class="menu-btn" onclick="toggleMenu()">☰</div>
+            </nav>
+        </header>
+
+
+        
+        <div class="meme-generator-container">
+            <div class="canvas-container">
+                <canvas id="my-canvas" height="500" width="500" onclick="draw(event)"> </canvas>
+            </div>
+            <div class="editor-menu-container">
+                <div class="control-box">
+                    <input type="text" name="text" placeholder="Text here"/>
+                    <br>
+                    <button class="move-line-btn up">up</button>
+                    <button class="move-line-btn down">down</button>
+                    <button class="switch-line-btn">switch line</button>
+                    <button class="add-line-btn" onclick="onAdd()">Add</button>
+                    <button class="dlt-line-btn">delete</button>
+                    <section class="font-style-container">
+                        <button class="font-size-btn larger">A+</button>
+                        <button class="font-size-btn smaller">A-</button>
+                        <button class="align-text-btn align-left">L</button>
+                        <button class="align-text-btn align-center">C</button>
+                        <button class="align-text-btn align-right">R</button>
+                        <br>
+                        <select class="font-selector">
+                            <option>Impact</option>
+                        </select>
+                        <input type="color" name="text-fill-color"/>
+                        <input type="color" name="text-stroke-color"/>
+                    </section>
+                    <section class="sticker-container">
+                        <article class="sticker"></article>
+                        <article class="sticker"></article>
+                        <article class="sticker"></article>
+                        <article class="sticker"></article>
+                    </section>
+                    <section class="action-container">
+                        <button class="share-btn">Share</button>
+                        <button class="download-btn">Download</button>
+                    </section>
+                </div>
+            </div>
+        </div>
+        
+        <div class="img-gallery-container" >
+            <input type="search" placeholder="Search">
+            <div class="filter-words"><span>funny</span><span>animal</span></div>
+            <div class="img-grid-container">
+                <img src="img/1.jpg">
+            </div>
+        </div>
+        
+        
+
+
+        <div class="share">
+            <ul>
+                <li onclick="onSave()">Save</li>
+                <li onclick="onDownload()">Download</li>
+                <li onclick="onShare()">Share on Facebook</li>
+            </ul>
+        </div>
+
+    </main>
+
+    <script src="js/meme-service.js"></script>
+    <script src="js/download-service.js"></script>
+    <script src="js/controller.js"></script>
+
+</body>
+
+</html>
