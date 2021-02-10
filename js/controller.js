@@ -9,11 +9,21 @@ function init() {
     gElCanvas = document.getElementById('my-canvas');
     gCtx = gElCanvas.getContext('2d');
     gCtx.font='impact';
-    gCurrLine = 0;
     // console.log(txt);
     // console.log(gCtx);
     // initHendlers()
+    loadImgs();
 }
+
+function loadImgs(){ 
+var strHTML='';
+var elImgContainer=document.querySelector('.img-grid-container');
+for (var i=1;i<19;i++){
+    strHTML+=` <article><img class="img-item" id="${i}" src="img/${i}.jpg" onclick="onSelectImg(this)"></article>`
+}
+elImgContainer.innerHTML=strHTML;
+}
+
 
 function onSave() {
     save()
@@ -41,27 +51,40 @@ function onAdd(){
     addLine();
 }
 
+function onDelete(){
+    deleteLine();
+}
+
+function onMoveLine(direction){
+moveLine(direction);
+}
+
+function onSwitchLines(){
+    switchLines();
+}
+
+function onAlign(direction){
+    align(direction);
+}
+
 function onChangeFontSize(sign){
-onChangeFontSize(sign);
+changeFontSize(sign);
 }
 
 function onUpdateTxt(){
     var newText=document.querySelector('input[name=text]').value;
-    console.log(newText);
-    if (!newText) newText=document.querySelector('input[name=text]').value;
-    console.log(newText);
+    // if (!newText) newText=document.querySelector('input[name=text]').value;
+    // console.log(newText);
     gMeme.lines[gMeme.selectedLineIdx].txt= newText;
     drawMeme(gMeme.selectedImgId);
 }
 
+function onUpdateMeme(changedItem){
+    update(changedItem);
+}
 
 
-var font = document.querySelector('.font-selector').value;
-var textColor = document.querySelector('input[name=text-fill-color]').value;
-var textStrokeColor = document.querySelector('input[name=text-stroke-color]').value;
-var chosenFont = document.querySelector('.font-selector').value;
-var lineAlignment = 'left';
-var text = document.querySelector('input[name=text]').value;
+
 
 // drawText(text,50,250)
 

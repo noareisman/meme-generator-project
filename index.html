@@ -14,7 +14,7 @@
     <main class="main-content">
         <header class="flex">
             <nav class="main-nav flex space-between align-center">
-                <div class="logo">MemeGen</div>
+                <div class="logo"><img class="logoImg" src="logo/LOGO.png"></div>
                 <ul class="nav-bar clean-list flex">
                     <li><a href="#">Gallery</a></li>
                     <li><a href="#">Memes</a></li>
@@ -27,37 +27,43 @@
 
         
         <div class="meme-generator-container">
+           
             <div class="canvas-container">
                 <canvas id="my-canvas" height="500" width="500"> </canvas>
             </div>
+           
+           
             <div class="editor-menu-container">
                 <div class="control-box">
                     <input type="text" name="text" placeholder="Text here" oninput="onUpdateTxt()"/>
                     <br>
-                    <button class="move-line-btn up">up</button>
-                    <button class="move-line-btn down">down</button>
-                    <button class="switch-line-btn">switch line</button>
+                    <button class="move-line-btn up" onclick="onMoveLine('up')">Up</button>
+                    <button class="move-line-btn down" onclick="onMoveLine('down')">Down</button>
+                    <button class="switch-line-btn" onclick="onSwitchLines()">Switch line</button>
                     <button class="add-line-btn" onclick="onAdd()">Add</button>
-                    <button class="dlt-line-btn">delete</button>
+                    <button class="dlt-line-btn" onclick="onDelete()">Delete</button>
+                    
                     <section class="font-style-container">
-                        <button class="font-size-btn larger" onclick="onChangeFontSize(1)">A+</button>
-                        <button class="font-size-btn smaller" onclick="onChangeFontSize(-1)">A-</button>
-                        <button class="align-text-btn align-left">L</button>
-                        <button class="align-text-btn align-center">C</button>
-                        <button class="align-text-btn align-right">R</button>
+                        <button class="font-size-btn larger" onclick="onChangeFontSize('plus')">A+</button>
+                        <button class="font-size-btn smaller" onclick="onChangeFontSize('minus')">A-</button>
+                        <button class="align-text-btn align-left" onclick="onAlign('left')">L</button>
+                        <button class="align-text-btn align-center" onclick="onAlign('center')">C</button>
+                        <button class="align-text-btn align-right" onclick="onAlign('right')">R</button>
                         <br>
                         <select class="font-selector">
                             <option>Impact</option>
                         </select>
-                        <input type="color" name="text-fill-color"/>
-                        <input type="color" name="text-stroke-color"/>
+                        <input type="color" name="text-fill-color" onchange="onUpdateMeme('color')"/>
+                        <input type="color" name="text-stroke-color" onchange="onUpdateMeme('stroke')"/>
                     </section>
+                   
                     <section class="sticker-container">
                         <article class="sticker"></article>
                         <article class="sticker"></article>
                         <article class="sticker"></article>
                         <article class="sticker"></article>
                     </section>
+                    
                     <section class="action-container">
                         <button class="share-btn">Share</button>
                         <button class="download-btn">Download</button>
@@ -69,11 +75,9 @@
         <div class="img-gallery-container" >
             <input type="search" placeholder="Search">
             <div class="filter-words"><span>funny</span><span>animal</span></div>
-            <div class="img-grid-container">
-                <img id="1" src="img/1.jpg" onclick="onSelectImg(this)">
-                <img id="2" src="img/2.jpg" onclick="onSelectImg(this)">
-            </div>
+            <div class="img-grid-container"></div>
         </div>
+
         
         
 
