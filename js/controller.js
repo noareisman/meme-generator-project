@@ -9,11 +9,11 @@ function init() {
     gElCanvas = document.getElementById('my-canvas');
     gCtx = gElCanvas.getContext('2d');
     gCtx.font='impact';
+    gCurrLine = 0;
     // console.log(txt);
     // console.log(gCtx);
     // initHendlers()
 }
-
 
 function onSave() {
     save()
@@ -22,7 +22,6 @@ function onSave() {
 function onDownload() {
     download()
 }
-
 
 function onShare() {
     share()
@@ -39,22 +38,23 @@ function onSelectImg(elImg){
 }
 
 function onAdd(){
-    var text = document.querySelector('input[name=text]').value;
-    console.log(text);
-    gMeme.lines[0].txt=text;
-    console.log(gMeme.lines[0]);
+    addLine();
+}
+
+function onChangeFontSize(sign){
+onChangeFontSize(sign);
+}
+
+function onUpdateTxt(){
+    var newText=document.querySelector('input[name=text]').value;
+    console.log(newText);
+    if (!newText) newText=document.querySelector('input[name=text]').value;
+    console.log(newText);
+    gMeme.lines[gMeme.selectedLineIdx].txt= newText;
     drawMeme(gMeme.selectedImgId);
 }
 
-function drawText(text, x, y) {
-    gCtx.lineWidth = 2;
-    gCtx.strokeStyle = 'red';
-    gCtx.fillStyle = 'white';
-    gCtx.font = '40px impact';
-    gCtx.textAlign = 'center';
-    gCtx.fillText(text, x, y);
-    gCtx.strokeText(text, x, y);
-}
+
 
 var font = document.querySelector('.font-selector').value;
 var textColor = document.querySelector('input[name=text-fill-color]').value;

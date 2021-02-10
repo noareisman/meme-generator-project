@@ -32,7 +32,7 @@
             </div>
             <div class="editor-menu-container">
                 <div class="control-box">
-                    <input type="text" name="text" placeholder="Text here" onkeypress="updateTxt()"/>
+                    <input type="text" name="text" placeholder="Text here" oninput="onUpdateTxt()"/>
                     <br>
                     <button class="move-line-btn up">up</button>
                     <button class="move-line-btn down">down</button>
@@ -40,8 +40,8 @@
                     <button class="add-line-btn" onclick="onAdd()">Add</button>
                     <button class="dlt-line-btn">delete</button>
                     <section class="font-style-container">
-                        <button class="font-size-btn larger">A+</button>
-                        <button class="font-size-btn smaller">A-</button>
+                        <button class="font-size-btn larger" onclick="onChangeFontSize(1)">A+</button>
+                        <button class="font-size-btn smaller" onclick="onChangeFontSize(-1)">A-</button>
                         <button class="align-text-btn align-left">L</button>
                         <button class="align-text-btn align-center">C</button>
                         <button class="align-text-btn align-right">R</button>
