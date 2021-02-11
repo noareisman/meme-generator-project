@@ -1,6 +1,9 @@
 'use strict';
 
 
+var gElAbout = document.querySelector('.creator');
+var gElMemeGenerator = document.querySelector('.meme-generator-container');
+var gElGallery = document.querySelector('.img-gallery-container');
 var gElCanvas;
 var gCtx;
 var gCurrShape = 'triangle';
@@ -44,7 +47,20 @@ function onShare(elForm, event) {
 
 function onSelectImg(elImg){
     gMeme.selectedImgId=elImg.id
+    onOpenMemeGenerator()
     drawMeme(gMeme.selectedImgId);
+}
+
+function onOpenMemeGenerator(){
+    gElMemeGenerator.style='display: flex'
+    gElGallery.style='display: none'
+    gElAbout.style='display: none'
+}
+
+function onOpenGallery(){
+    gElMemeGenerator.style='display: none'
+    gElGallery.style='display: flex'
+    gElAbout.style='display: flex'
 }
 
 function onAdd(){
