@@ -41,18 +41,22 @@ function moveLine(direction) {
 }
 
 
-function switchLines() {
-
-}
-
+// function switchLines() {
+//     gMeme.selectedLineIdx++
+// }
+///////////////////////////////////////////////////////////////there is a bug here - need to fix it
 function addLine() {
+    var elTxt=document.querySelector('input[name=text]').value;
+    console.log(elTxt);
+
+    gMeme.lines[gMeme.selectedLineIdx].txt=`${elTxt}`;
+    console.log(gMeme);
     gMeme.selectedLineIdx++
-    console.log(gMeme.selectedLineIdx);
     var newLine = gMeme.lines.slice(gMeme.lines.length - 1, 1)[0];
-    console.log(newLine);
+    console.log(gMeme);
     newLine.txt = '';
     newLine.align='center';
-    gMeme.lines.push(newLine);
+    gMeme.lines.push(newLine);;
 }
 
 var gMeme = {

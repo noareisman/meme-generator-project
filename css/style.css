@@ -126,6 +126,11 @@ canvas {
         height:350px;
         width: 100%;     
     }
+    
+    .img-grid-container{
+    grid-template-columns:repeat(auto-fill, minmax(165px, 1fr));
+    grid-template-rows:repeat(auto-fill, minmax(165px, 1fr));
+    }
 
     .nav-bar{
         position: fixed;
@@ -138,6 +143,10 @@ canvas {
        
     }
    
+    .main-nav{
+        padding-inline-end: 20px !important;
+        padding-inline-start: 20px !important;
+    }
     
     .menu-open .nav-bar {
         transform: translateY(100%) ;
@@ -151,7 +160,6 @@ canvas {
         font-size: 2.5em;
         display: block;
         cursor: pointer;
-        padding-right: 15px;
     }
 
     .nav-bar li {
