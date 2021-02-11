@@ -11,8 +11,9 @@
 
 <body onload="init()">
 
-    <main class="main-content column align-center">
-        <header class="flex">
+    <header>
+
+        <div class="nav-container">
             <nav class="main-nav flex space-between align-center">
                 <span class="logo"><img class="logoImg" src="logo/LOGO.png"></span>
                 <ul class="nav-bar clean-list flex">
@@ -20,9 +21,12 @@
                     <li onclick="onOpenMemeGenerator()"><a href="#">Memes</a></li>
                     <li onclick="onOpenGallery()"><a href="#">About</a></li>
                 </ul>
-                <div class="menu-btn" onclick="toggleMenu()">☰</div>
-            </nav>
-        </header>
+                <div class="menu" onclick="toggleMenu()">☰</div>
+        </nav>
+        </div>
+    </header>
+
+    <main class="main-content flex column">
 
         <div class="img-gallery-container flex column">
             <div class="filter-bar flex space-between align-center">
@@ -125,6 +129,19 @@
         <span class="logo"><img class="logoImg-footer" src="logo/LOGO.png"></span>
         <smaller>all rights reserved 2019</smaller>
     </footer>
+
+
+    
+    <script>
+        function toggleMenu() {
+            document.body.classList.toggle('menu-open');
+        }
+
+        function modal(){
+            document.body.classList.toggle('modal-open');
+        }
+        
+    </script>
 
     <script src="js/events-service.js"></script>
     <script src="js/meme-service.js"></script>

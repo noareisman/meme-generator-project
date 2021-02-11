@@ -15,11 +15,11 @@ body{
 .img-grid-container{
     background-color:#E3E3E3;
     margin: 0 auto;
-    max-width:1200px;
+    width: 100%;
     padding: 20px;
     display: grid;
-    grid-template-columns:repeat(auto-fill, minmax(100px, 1fr));
-    grid-template-rows:repeat(auto-fill, minmax(100px, 1fr));
+    grid-template-columns:repeat(auto-fill, minmax(350px, 1fr));
+    grid-template-rows:repeat(auto-fill, minmax(350px, 1fr));
     gap:20px 20px;
 }
 
@@ -40,8 +40,9 @@ body{
 }
 
 button[class*="btn"]{
-    height: 61px;
-    width: 61px;
+    height: 45%;
+    ;
+    width: 16.26%;
     cursor: pointer;
     border-radius: 10px;
     background-color: #FFFFFF;
@@ -54,62 +55,113 @@ button[class*="btn"]{
     object-fit: contain;
 }
 .btn{
-    width:61px;
+    width:16.26%;
     border-radius: 10px;
     background-color: #FFFFFF;
     border-style: none;
 }
 
-.meme-generator-container{
-    background-color:#E3E3E3;
+.main-content{
+    max-width:1200px ;
     margin: 0 auto;
-    padding-left: 50px;
-    padding-top: 25px;
-    padding-bottom: 25px;
-    max-width: 1200px;
-    height: 600px;
-    display: flex;
-    align-items: center;
-    
 }
+select{
+    border-color:  #FFFFFF;
+    border-radius: 10px;
+    width: 58.4%;
+    border-style: none;
+}
+
 
 .control-box>input{
     width: 100%;
     border-radius: 10px;
     border-style: none;
-   
+}    
 
-}
-
-select{
-    border-color:  #FFFFFF;
-    border-radius: 10px;
-    width: 219px;
-    border-style: none;
-}
-
-
+.meme-generator-container{
+    background-color:#E3E3E3;
+    padding: 25px 50px;
+    width:100%;
+    /* max-height: 600px; */
+    display: flex;
+    align-items: center;
+    
+}    
 
 canvas {
     border: 1px solid black;
-    margin: 0 auto;
-    /* display: inline-block; */
+    max-height: 550px;
+    width: 100%;
+    height: 100%;
 }
 
 .canvas-container{
     width: 50%;
-    margin: 0 auto;
-    max-width: 50%;
+    margin-right: 50px;
 }
 
-.editor-menu-container{
-    max-width: 50%;
+.editor-menu-container{     
     background-color: #E3E3E3;
     margin: 0 auto;
     width: 375px;
     height: 550px;
-}
+    }
 
+    .menu{
+        display: none;
+    }
+
+@media(max-width:750px) {
+    .meme-generator-container{
+        flex-direction: column;
+    } 
+    
+    .canvas-container{
+        width: 100%;
+        margin:0px auto 20px ;
+    }
+
+    .editor-menu-container{
+        height:350px;
+        width: 100%;     
+    }
+
+    .nav-bar{
+        position: fixed;
+        visibility: hidden;
+        text-align: center;
+        flex-direction: column;
+        width: 80%;
+        margin: 10%;
+        transform: translateY(0); 
+       
+    }
+   
+    
+    .menu-open .nav-bar {
+        transform: translateY(100%) ;
+        transition: transform .8s;
+        visibility: visible;
+
+    }
+
+    .menu{
+        color:  #fff;
+        font-size: 2.5em;
+        display: block;
+        cursor: pointer;
+        padding-right: 15px;
+    }
+
+    .nav-bar li {
+        border-bottom: 1px solid #ccc; 
+        background-color:rgb(82, 81, 81, 90%); 
+
+    } 
+    
+
+}
 
 .control-box{
     height: 135px;
@@ -122,6 +174,7 @@ canvas {
 
 .font-style-container{
 height: 135px;
+/* width: 100%; */
 align-content: space-between;
 }
 
@@ -136,7 +189,7 @@ align-content: space-between;
 
 .action-container{
     width:100%;
-    height: 61px;
+    height: 11%;
 }
 
 
@@ -146,11 +199,23 @@ html{
     font-family: lato-reg, sans-serif;
 }
 
-header{
+
+/* .header{
     background-color:#FF7F00;
     height: 66px;
     justify-content: center;
-    /* position: fixed; */
+width: 1200px;
+} */
+    
+}
+.nav-cotainer{
+    width: 1200px;
+}
+.main-nav{
+    padding-inline-start: 50px;
+    padding-inline-end: 50px;
+    background-color:#FF7F00;
+    width: 100%;
 }
 footer{
     background-color:#FF7F00;
@@ -158,14 +223,13 @@ footer{
     justify-content: center;
     /* position: fixed; */
 }
-
+.logoImg{
+    height: 40px;
+}
 .logoImg-footer{
     height: 50px;
 }
-.main-nav{
-    background-color:#FF7F00;
-    width: 1200px;
-}
+
 
 .nav-bar >* :hover{
     border-bottom: solid #040A2C;
@@ -202,13 +266,17 @@ ul{
 
 .creator{
     height: 500px;
-    width: 1000px;
-    padding-left: 300px;
+    width: fit-content;
+    margin:0 auto
 }
 .creator-img{
     border-radius: 50%;
     height:325px;
     width:325px;
+}
+
+.about-txt{
+    margin-inline-start: 50px;
 }
 
 
@@ -261,10 +329,16 @@ a{
     color: #FFFFFF;
 }
 
+form{
+    height: 100px;
+}
+
 form > button{
     width: 120px !important;
     background-color:#FF7F00 !important;
     color: #FFFFFF;
     font-size: 19px;
+    
+    
 
 }
