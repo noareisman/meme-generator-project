@@ -14,7 +14,7 @@
     <main class="main-content">
         <header class="flex">
             <nav class="main-nav flex space-between align-center">
-                <div class="logo"><img class="logoImg" src="logo/LOGO.png"></div>
+                <span class="logo"><img class="logoImg" src="logo/LOGO.png"></span>
                 <ul class="nav-bar clean-list flex">
                     <li><a href="#">Gallery</a></li>
                     <li><a href="#">Memes</a></li>
@@ -24,76 +24,97 @@
             </nav>
         </header>
 
-
-        
-        <div class="meme-generator-container">
-           
-            <div class="canvas-container">
-                <canvas id="my-canvas" height="500" width="500"> </canvas>
+        <div class="img-gallery-container">
+            <div class="filter-bar">
+                <input type="search" placeholder="Search">
+                <div class="filter-words"><span>funny</span><span>animal</span></div>
             </div>
-           
-           
-            <div class="editor-menu-container">
-                <div class="control-box">
-                    <input type="text" name="text" placeholder="Text here" oninput="onUpdateTxt()"/>
-                    <br>
-                    <button class="move-line-btn up" onclick="onMoveLine('up')">Up</button>
-                    <button class="move-line-btn down" onclick="onMoveLine('down')">Down</button>
-                    <button class="switch-line-btn" onclick="onSwitchLines()">Switch line</button>
-                    <button class="add-line-btn" onclick="onAdd()">Add</button>
-                    <button class="dlt-line-btn" onclick="onDelete()">Delete</button>
-                    
-                    <section class="font-style-container">
-                        <button class="font-size-btn larger" onclick="onChangeFontSize('plus')">A+</button>
-                        <button class="font-size-btn smaller" onclick="onChangeFontSize('minus')">A-</button>
-                        <button class="align-text-btn align-left" onclick="onAlign('left')">L</button>
-                        <button class="align-text-btn align-center" onclick="onAlign('center')">C</button>
-                        <button class="align-text-btn align-right" onclick="onAlign('right')">R</button>
+            <div class="img-grid-container"></div>
+        </div>
+
+
+        <div class="meme-generator-container">
+
+            <div class="canvas-container">
+                <canvas id="my-canvas" height="550" width="550"> </canvas>
+            </div>
+
+
+            <div class="editor-menu-container flex">
+                <div class="flex column space-between">
+                    <section class="control-box flex wrap space-between">
+                        <input type="text" name="text" placeholder="Text here" oninput="onUpdateTxt()" />
                         <br>
+                        <button class="move-line-btn up" onclick="onMoveLine('up')">Up</button>
+                        <button class="move-line-btn down" onclick="onMoveLine('down')">Down</button>
+                        <button class="switch-line-btn" onclick="onSwitchLines()"><img class="icon"
+                                src="icons/up-and-down-opposite-double-arrows-side-by-side.png"></button>
+                        <button class="add-line-btn" onclick="onAdd()"><img class="icon" src="icons/add.png"></button>
+                        <button class="dlt-line-btn" onclick="onDelete()"><img class="icon"
+                                src="icons/trash.png"></button>
+                    </section>
+
+                    <section class="font-style-container flex wrap space-between">
+                        <button class="font-size-btn larger" onclick="onChangeFontSize('plus')"><img class="icon"
+                                src="icons/increase font - icon.png"></button>
+                        <button class="font-size-btn smaller" onclick="onChangeFontSize('minus')"><img class="icon"
+                                src="icons/decrease font - icon.png"></button>
+                        <button class="align-text-btn align-left" onclick="onAlign('left')"><img class="icon"
+                                src="icons/align-to-left.png"></button>
+                        <button class="align-text-btn align-center" onclick="onAlign('center')"><img class="icon"
+                                src="icons/center-text-alignment.png"></button>
+                        <button class="align-text-btn align-right" onclick="onAlign('right')"><img class="icon"
+                                src="icons/align-to-right.png"></button>
                         <select class="font-selector">
                             <option>Impact</option>
                         </select>
-                        <input type="color" name="text-fill-color" onchange="onUpdateMeme('color')"/>
-                        <input type="color" name="text-stroke-color" onchange="onUpdateMeme('stroke')"/>
+                        <input type="color" class="btn" name="text-fill-color" onchange="onUpdateMeme('color')" />
+                        <input type="color" class="btn" name="text-stroke-color" onchange="onUpdateMeme('stroke')" />
                     </section>
-                   
-                    <section class="sticker-container">
+
+                    <!-- <section class="sticker-container">
                         <article class="sticker"></article>
                         <article class="sticker"></article>
                         <article class="sticker"></article>
                         <article class="sticker"></article>
-                    </section>
-                    
+                    </section> -->
+
                     <section class="action-container">
-                        <button class="share-btn">Share</button>
-                        <button class="download-btn">Download</button>
+                        <form action="" method="POST" enctype="multipart/form-data" onsubmit="onShare(this, event)">
+                            <input name="img" id="imgData" type="hidden" />
+                            <button class="btn" type="submit">Share</button>
+                            <!-- <a href="#" class="btn" onclick="downloadImg(this)" download="my-img.jpg">Download as jpeg</a> -->
+                            <button class="download-btn"><a href="#" onclick="onDownload(this)"
+                                    download="exported-data.jpg">Download</a></button>
+                            <div class="share-container"></div>
+                        </form>
                     </section>
                 </div>
             </div>
         </div>
-        
-        <div class="img-gallery-container" >
-            <input type="search" placeholder="Search">
-            <div class="filter-words"><span>funny</span><span>animal</span></div>
-            <div class="img-grid-container"></div>
-        </div>
 
-        
-        
-
-
-        <div class="share">
+        <!-- <div class="share">
             <ul>
                 <li onclick="onSave()">Save</li>
                 <li onclick="onDownload()">Download</li>
                 <li onclick="onShare()">Share on Facebook</li>
             </ul>
-        </div>
+        </div> -->
 
     </main>
+    <section class="creator flex column align-center">
+        <img class="creator-img" src="team/noa.jpg">
+        <h2>Noa Reisman</h2>
+        <p>Student at Coding Academy Bootcamp</p>
+    </section>
+    <footer class="flex column align-center">
+        <span class="logo"><img class="logoImg-footer" src="logo/LOGO.png"></span>
+        <smaller>all rights reserved 2019</smaller>
+    </footer>
 
     <script src="js/events-service.js"></script>
     <script src="js/meme-service.js"></script>
+    <script src="js/share-service.js"></script>
     <script src="js/download-service.js"></script>
     <script src="js/controller.js"></script>
 

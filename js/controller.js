@@ -29,12 +29,12 @@ function onSave() {
     save()
 }
 
-function onDownload() {
-    download()
+function onDownload(elLink) {
+    download(elLink)
 }
 
-function onShare() {
-    share()
+function onShare(elForm, event) {
+    share(elForm, event);
 }
 
 // function drawImg() {
