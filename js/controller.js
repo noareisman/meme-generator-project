@@ -8,33 +8,44 @@ var gElCanvas;
 var gCtx;
 var gStartPos;
 const gTouchEvs = ['touchstart', 'touchmove', 'touchend']
+var gCurrImgList;
 
 function init() {
     gElCanvas = document.getElementById('my-canvas');
     gCtx = gElCanvas.getContext('2d');
     gCtx.font = 'impact';
+    gCurrImgList = gImgs;
     loadImgs();
-    addListeners()
+    addListeners();
 }
 
 function loadImgs() {
     var strHTML = '';
     var elImgContainer = document.querySelector('.img-grid-container');
-    for (var i = 1; i < 19; i++) {
-        strHTML += ` <article><img class="img-item" id="${i}" src="img/${i}.jpg" onclick="onSelectImg(this)"></article>`
+    for (var i = 0; i < gCurrImgList.length; i++) {
+        strHTML += `<article><img class="img-item" id="${gCurrImgList[i].id}" src="img/${gCurrImgList[i].id}.jpg" onclick="onSelectImg(this)"></article>`
     }
     elImgContainer.innerHTML = strHTML;
 }
 
+function onSearch(filter, elFilter) {
+    gCurrImgList = gImgs.filter(img => img.keywords.includes(filter));
+    console.log(gCurrImgList);
+    loadImgs();
+    var newFontSize = parseInt(elFilter.style.fontSize.slice(0, elFilter.style.fontSize.indexOf('p')));
+    console.log(newFontSize);
+    elFilter.style.fontSize = `${newFontSize + 10}px`;
+}
+
 function addListeners() {
-    addMouseListeners()
-    addTouchListeners()
+    addMouseListeners();
+    addTouchListeners();
 }
 
 function addMouseListeners() {
-    gElCanvas.addEventListener('mousemove', onMove)
-    gElCanvas.addEventListener('mousedown', onDown)
-    gElCanvas.addEventListener('mouseup', onUp)
+    gElCanvas.addEventListener('mousemove', onMove);
+    gElCanvas.addEventListener('mousedown', onDown);
+    gElCanvas.addEventListener('mouseup', onUp);
 }
 
 function addTouchListeners() {
@@ -44,7 +55,7 @@ function addTouchListeners() {
 }
 
 function onDownload(elLink) {
-    download(elLink)
+    download(elLink);
 }
 
 function onShare(elForm, event) {
@@ -52,21 +63,21 @@ function onShare(elForm, event) {
 }
 
 function onSelectImg(elImg) {
-    gMeme.selectedImgId = elImg.id
-    onOpenMemeGenerator()
+    gMeme.selectedImgId = elImg.id;
+    onOpenMemeGenerator();
     renderMeme();
 }
 
 function onOpenMemeGenerator() {
-    gElMemeGenerator.style = 'display: flex'
-    gElGallery.style = 'display: none'
-    gElAbout.style = 'display: none'
+    gElMemeGenerator.style = 'display: flex';
+    gElGallery.style = 'display: none';
+    gElAbout.style = 'display: none';
 }
 
 function onOpenGallery() {
-    gElMemeGenerator.style = 'display: none'
-    gElGallery.style = 'display: flex'
-    gElAbout.style = 'display: flex'
+    gElMemeGenerator.style = 'display: none';
+    gElGallery.style = 'display: flex';
+    gElAbout.style = 'display: flex';
 }
 
 function onAdd() {
@@ -103,31 +114,31 @@ function onUpdateColor(changedItem, color) {
     gCtx.save();
     updateColor(changedItem, color);
 }
-/////////////////////////////////////////////////////////////////////
+
 function onDown(ev) {
-    const pos = getEvPos(ev)
+    const pos = getEvPos(ev);
     // if (!isLineClicked(pos)) return
-    gMeme.lines[gMeme.selectedLineIdx].isDragging = true
-    gStartPos = pos
-    document.body.style.cursor = 'grabbing'
+    gMeme.lines[gMeme.selectedLineIdx].isDragging = true;
+    gStartPos = pos;
+    document.body.style.cursor = 'grabbing';
 }
 
 function onMove(ev) {
     if (gMeme.lines[gMeme.selectedLineIdx].isDragging) {
-        const pos = getEvPos(ev)
-        const dx = pos.x - gStartPos.x
-        const dy = pos.y - gStartPos.y
+        const pos = getEvPos(ev);
+        const dx = pos.x - gStartPos.x;
+        const dy = pos.y - gStartPos.y;
 
-        gMeme.lines[gMeme.selectedLineIdx].x += dx
-        gMeme.lines[gMeme.selectedLineIdx].y += dy
-        gStartPos = pos
-        renderMeme()
+        gMeme.lines[gMeme.selectedLineIdx].x += dx;
+        gMeme.lines[gMeme.selectedLineIdx].y += dy;
+        gStartPos = pos;
+        renderMeme();
     }
 }
 
 function onUp() {
-    gMeme.lines[gMeme.selectedLineIdx].isDragging = false
-    document.body.style.cursor = 'grab'
+    gMeme.lines[gMeme.selectedLineIdx].isDragging = false;
+    document.body.style.cursor = 'grab';
 }
 
 function getEvPos(ev) {
@@ -136,12 +147,14 @@ function getEvPos(ev) {
         y: ev.offsetY
     }
     if (gTouchEvs.includes(ev.type)) {
-        ev.preventDefault()
-        ev = ev.changedTouches[0]
+        ev.preventDefault();
+        ev = ev.changedTouches[0];
         pos = {
             x: ev.pageX - ev.target.offsetLeft - ev.target.clientLeft,
             y: ev.pageY - ev.target.offsetTop - ev.target.clientTop
         }
     }
-    return pos
+    return pos;
 }
+
+

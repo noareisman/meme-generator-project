@@ -1,8 +1,5 @@
 'use strict';
 
-
-///////not working yet
-
 // on submit call to this function
 function share(elForm, ev) {
     ev.preventDefault();

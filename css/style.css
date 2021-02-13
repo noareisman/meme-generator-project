@@ -252,7 +252,7 @@ footer{
     }
     
     *.social-link :hover{
-    background-color:#516FAD;
+    background-color:#FF7F00;
     }
 
 .menu-btn{
@@ -271,6 +271,10 @@ ul{
     height: 100%;
 }
 
+.img-item:hover{
+    cursor: pointer;
+    border: 10px solid #FF7F00;
+}
 .creator{
     height: 500px;
     width: fit-content;
@@ -300,6 +304,13 @@ ul{
 
 .filter-words>*{
     margin-inline-start: 50px;
+    text-transform: capitalize;
+}
+
+.filter-words>*:hover{
+    font-weight: bold;
+    color: #FF7F00;
+    cursor: pointer;
 }
 
 .search{

@@ -1,10 +1,26 @@
 'use strict';
 
-var gKeywords = { 'happy': 12, 'funny puk': 1 }
+// var gKeywords = { 'happy': 12, 'funny puk': 1 }
 
 var gImgs = [
-    { id: 1, url: 'img/1.jpg', keywords: ['funny'] },
-    { id: 2, url: 'img/2.jpg', keywords: ['animal'] }
+    { id: 1, url: 'img/1.jpg', keywords: ['funny', 'politics', 'man'] },
+    { id: 2, url: 'img/2.jpg', keywords: ['animal', 'cute'] },
+    { id: 3, url: 'img/3.jpg', keywords: ['animal', 'cute'] },
+    { id: 4, url: 'img/4.jpg', keywords: ['animal'] },
+    { id: 5, url: 'img/5.jpg', keywords: ['cute', 'funny'] },
+    { id: 6, url: 'img/6.jpg', keywords: ['man'] },
+    { id: 7, url: 'img/7.jpg', keywords: ['cute', 'funny'] },
+    { id: 8, url: 'img/8.jpg', keywords: ['man'] },
+    { id: 9, url: 'img/9.jpg', keywords: ['cute', 'funny'] },
+    { id: 10, url: 'img/10.jpg', keywords: ['politics', 'funny', 'man'] },
+    { id: 11, url: 'img/11.jpg', keywords: ['man', 'sport'] },
+    { id: 12, url: 'img/12.jpg', keywords: ['man'] },
+    { id: 13, url: 'img/13.jpg', keywords: ['man'] },
+    { id: 14, url: 'img/14.jpg', keywords: ['man'] },
+    { id: 15, url: 'img/15.jpg', keywords: ['man'] },
+    { id: 16, url: 'img/16.jpg', keywords: ['man'] },
+    { id: 17, url: 'img/17.jpg', keywords: ['man', 'politics'] },
+    { id: 18, url: 'img/18.jpg', keywords: ['cute'] }
 ];
 
 var gTextPositions = [
@@ -56,17 +72,17 @@ function moveLine(direction) {
     drawMeme(gMeme.selectedImgId);
 }
 
-function markCurrLine() {
-    drawRect(gMeme.lines[gMeme.selectedLineIdx].x, gMeme.lines[gMeme.selectedLineIdx].y)
-    gTextPositions[gMeme.selectedLineIdx]
+// function markCurrLine() {
+//     drawRect(gMeme.lines[gMeme.selectedLineIdx].x, gMeme.lines[gMeme.selectedLineIdx].y)
+//     gTextPositions[gMeme.selectedLineIdx]
+// }
 
-}
-function drawRect(x, y) {
-    gCtx.beginPath()
-    gCtx.rect(x - 240, y - gMeme.lines[gMeme.selectedLineIdx].size, 530, gMeme.lines[gMeme.selectedLineIdx].size + 10)
-    gCtx.strokeStyle = 'yellow'
-    gCtx.stroke()
-}
+// function drawRect(x, y) {
+//     gCtx.beginPath();
+//     gCtx.rect(x - 240, y - gMeme.lines[gMeme.selectedLineIdx].size, 530, gMeme.lines[gMeme.selectedLineIdx].size + 10);
+//     gCtx.strokeStyle = 'yellow';
+//     gCtx.stroke();
+// }
 
 function switchLines() {
     if (gMeme.selectedLineIdx === (gMeme.lines.length) - 1) {
@@ -76,16 +92,16 @@ function switchLines() {
     }
     renderMeme()
     document.querySelector('input[name=text]').value = gMeme.lines[gMeme.selectedLineIdx].txt;
-    markCurrLine();
+    // markCurrLine();
 }
 
 function addLine() {
     if (gMeme.lines.length > 3) return;
-    createNewLine()
+    createNewLine();
     gMeme.selectedLineIdx++;
     document.querySelector('input[name=text]').value = null;
     renderMeme();
-    markCurrLine();
+    // markCurrLine();///////////////////////////////////////////////still have bugs here incase I erase a line or swich line before adding additional line( didn't have time to fix it)
 }
 
 function renderMeme() {
@@ -112,7 +128,7 @@ function createNewLine() {
     gMeme.lines.push(newLine);
 }
 
-function drawText(text, x, y,line) {
+function drawText(text, x, y, line) {
     gCtx.lineWidth = 2;
     gCtx.fillStyle = `${line.color}`;
     gCtx.strokeStyle = `${line.strokeColor}`;
@@ -155,7 +171,7 @@ function updateColor(changedItem, color) {
 }
 
 function drawMeme(imgId) {
-    const img = new Image()
+    const img = new Image();
     img.src = `./img/${imgId}.jpg`;
     img.onload = () => {
         gCtx.drawImage(img, 0, 0, gElCanvas.width, gElCanvas.height) //img,x,y,xend,yend
