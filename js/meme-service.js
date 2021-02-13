@@ -89,13 +89,13 @@ function addLine() {
 }
 
 function renderMeme() {
-    clearCanvas();
+    // clearCanvas();
     drawMeme(gMeme.selectedImgId)
 }
 
-function clearCanvas() {
-    gCtx.clearRect(0, 0, gElCanvas.width, gElCanvas.height)
-}
+// function clearCanvas() {
+//     gCtx.clearRect(0, 0, gElCanvas.width, gElCanvas.height)
+// }
 
 function createNewLine() {
     var newLine = {
@@ -106,7 +106,8 @@ function createNewLine() {
         strokeColor: 'black',
         font: 'impact',
         x: 250,
-        y: gTextPositions[gMeme.lines.length].y
+        y: gTextPositions[gMeme.lines.length].y,
+        isDragging: false
     }
     gMeme.lines.push(newLine);
 }
