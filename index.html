@@ -54,7 +54,7 @@
 
             <div class="editor-menu-container flex column space-between">
                 <section class="control-box flex wrap space-between">
-                    <input type="text" name="text" placeholder="Text here" oninput="onUpdateTxt()" />
+                    <input type="text" name="text" placeholder="Text here" oninput="onUpdateTxt(this.value)" />
                     <br>
                     <button class="move-line-btn up" onclick="onMoveLine('up')">Up</button>
                     <button class="move-line-btn down" onclick="onMoveLine('down')">Down</button>
@@ -78,8 +78,8 @@
                     <select class="font-selector">
                         <option>Impact</option>
                     </select>
-                    <input type="color" class="btn" name="text-fill-color" onchange="onUpdateMeme('color')" />
-                    <input type="color" class="btn" name="text-stroke-color" onchange="onUpdateMeme('stroke')" />
+                    <input type="color" class="btn" name="text-fill-color" value="#FFFFFF" oninput="onUpdateColor('color',this.value)" />
+                    <input type="color" class="btn" name="text-stroke-color" value="#000000" oninput="onUpdateColor('stroke',this.value)" />
                 </section>
 
                 <section class="sticker-container">

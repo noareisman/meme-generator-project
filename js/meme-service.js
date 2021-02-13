@@ -8,56 +8,10 @@ var gImgs = [
 ];
 
 var gTextPositions = [
-    { x: 250, y: 50 },
-    { x: 250, y: 450 },
-    { x: 250, y: 250 }
+    { x: 250, y: 75 },
+    { x: 250, y: 500 },
+    { x: 250, y: 300 }
 ]
-
-function align(direction) {
-    switch (direction) {
-        case 'left':
-            gMeme.lines[gMeme.selectedLineIdx].align = 'start';
-            gTextPositions[gMeme.selectedLineIdx].x = 40;
-            break;
-        case 'center':
-            gMeme.lines[gMeme.selectedLineIdx].align = 'center';
-            gTextPositions[gMeme.selectedLineIdx].x = 250;
-            break;
-        case 'right':
-            gMeme.lines[gMeme.selectedLineIdx].align = 'end';
-            gTextPositions[gMeme.selectedLineIdx].x = 460;
-            break;
-    }
-    drawMeme(gMeme.selectedImgId);
-}
-
-function moveLine(direction) {
-    if (direction === 'up') {
-        gTextPositions[gMeme.selectedLineIdx].y -= 5;
-    } else if (direction === 'down') {
-        gTextPositions[gMeme.selectedLineIdx].y += 5;
-    }
-    drawMeme(gMeme.selectedImgId);
-}
-
-
-// function switchLines() {
-//     gMeme.selectedLineIdx++
-// }
-///////////////////////////////////////////////////////////////there is a bug here - need to fix it
-function addLine() {
-    var elTxt=document.querySelector('input[name=text]').value;
-    console.log(elTxt);
-
-    gMeme.lines[gMeme.selectedLineIdx].txt=`${elTxt}`;
-    console.log(gMeme);
-    gMeme.selectedLineIdx++
-    var newLine = gMeme.lines.slice(gMeme.lines.length - 1, 1)[0];
-    console.log(gMeme);
-    newLine.txt = '';
-    newLine.align='center';
-    gMeme.lines.push(newLine);;
-}
 
 var gMeme = {
     selectedImgId: 0,
@@ -67,29 +21,113 @@ var gMeme = {
             txt: '',
             size: 50,
             align: 'center',
-            color: document.querySelector('input[name=text-fill-color]').value,
-            strokeColor: document.querySelector('input[name=text-stroke-color]').value,
-            font: document.querySelector('.font-selector').value,
-        }
+            color: 'white',
+            strokeColor: 'black',
+            font: 'impact',
+            x: 250,
+            y: 75
+        },
     ]
 }
+function align(direction) {
+    switch (direction) {
+        case 'left':
+            gMeme.lines[gMeme.selectedLineIdx].align = 'start';
+            gMeme.lines[gMeme.selectedLineIdx].x = 40;
+            break;
+        case 'center':
+            gMeme.lines[gMeme.selectedLineIdx].align = 'center';
+            gMeme.lines[gMeme.selectedLineIdx].x = 250;
+            break;
+        case 'right':
+            gMeme.lines[gMeme.selectedLineIdx].align = 'end';
+            gMeme.lines[gMeme.selectedLineIdx].x = 460;
+            break;
+    }
+    drawMeme(gMeme.selectedImgId);
+}
 
-// var text = document.querySelector('input[name=text]').value;
+function moveLine(direction) {
+    if (direction === 'up') {
+        gMeme.lines[gMeme.selectedLineIdx].y -= 5;
+    } else if (direction === 'down') {
+        gMeme.lines[gMeme.selectedLineIdx].y += 5;
+    }
+    drawMeme(gMeme.selectedImgId);
+}
 
-function drawText(text, x, y) {
-    var currLine = gMeme.lines[gMeme.selectedLineIdx];
+function markCurrLine() {
+    drawRect(gMeme.lines[gMeme.selectedLineIdx].x, gMeme.lines[gMeme.selectedLineIdx].y)
+    gTextPositions[gMeme.selectedLineIdx]
+
+}
+function drawRect(x, y) {
+    gCtx.beginPath()
+    gCtx.rect(x - 240, y - gMeme.lines[gMeme.selectedLineIdx].size, 530, gMeme.lines[gMeme.selectedLineIdx].size + 10)
+    gCtx.strokeStyle = 'yellow'
+    gCtx.stroke()
+}
+
+function switchLines() {
+    if (gMeme.selectedLineIdx === (gMeme.lines.length) - 1) {
+        gMeme.selectedLineIdx = 0;
+    } else {
+        gMeme.selectedLineIdx++;
+    }
+    renderMeme()
+    document.querySelector('input[name=text]').value = gMeme.lines[gMeme.selectedLineIdx].txt;
+    markCurrLine();
+}
+
+function addLine() {
+    if (gMeme.lines.length > 3) return;
+    createNewLine()
+    gMeme.selectedLineIdx++;
+    document.querySelector('input[name=text]').value = null;
+    renderMeme();
+    markCurrLine();
+}
+
+function renderMeme() {
+    clearCanvas();
+    drawMeme(gMeme.selectedImgId)
+}
+
+function clearCanvas() {
+    gCtx.clearRect(0, 0, gElCanvas.width, gElCanvas.height)
+}
+
+function createNewLine() {
+    var newLine = {
+        txt: '',
+        size: 50,
+        align: 'center',
+        color: 'white',
+        strokeColor: 'black',
+        font: 'impact',
+        x: 250,
+        y: gTextPositions[gMeme.lines.length].y
+    }
+    gMeme.lines.push(newLine);
+}
+
+function drawText(text, x, y,line) {
     gCtx.lineWidth = 2;
-    gCtx.fillStyle = `${currLine.color}`;
-    gCtx.strokeStyle = `${currLine.strokeColor}`;
-    gCtx.font = `${currLine.size}px ${currLine.font}`;
-    gCtx.textAlign = `${currLine.align}`;
+    gCtx.fillStyle = `${line.color}`;
+    gCtx.strokeStyle = `${line.strokeColor}`;
+    gCtx.font = `${line.size}px ${line.font}`;
+    gCtx.textAlign = `${line.align}`;
     gCtx.fillText(text, x, y);
     gCtx.strokeText(text, x, y);
 }
+function updateTxt(elTxt) {
+    gMeme.lines[gMeme.selectedLineIdx].txt = elTxt;
+}
 
 function deleteLine() {
-    gMeme.lines[gMeme.selectedLineIdx].txt = ''
-    drawMeme(gMeme.selectedImgId);
+    document.querySelector('input[name=text]').value = null;
+    gMeme.lines[gMeme.selectedLineIdx].txt = '';
+    renderMeme();
 }
 
 //    function getImgIdxById(imgId) {
@@ -106,10 +144,13 @@ function changeFontSize(sign) {
 
 }
 
-function update(changedItem){
-if (changedItem==='color') gMeme.lines[gMeme.selectedLineIdx].color=document.querySelector('input[name=text-color]').value;
-if (changedItem==='stroke') gMeme.lines[gMeme.selectedLineIdx].strokeColor=document.querySelector('input[name=text-stroke-color]').value;
-    drawMeme(gMeme.selectedImgId)
+
+///////////there is a bug here - need to fix it
+function updateColor(changedItem, color) {
+    if (changedItem === 'color') gMeme.lines[gMeme.selectedLineIdx].color = color;
+    if (changedItem === 'stroke') gMeme.lines[gMeme.selectedLineIdx].strokeColor = color;
+
+    renderMeme();
 }
 
 function drawMeme(imgId) {
@@ -117,8 +158,12 @@ function drawMeme(imgId) {
     img.src = `./img/${imgId}.jpg`;
     img.onload = () => {
         gCtx.drawImage(img, 0, 0, gElCanvas.width, gElCanvas.height) //img,x,y,xend,yend
-        drawText(gMeme.lines[0].txt, gTextPositions[0].x, gTextPositions[0].y);
-        if (gMeme.lines.length === 2) drawText(gMeme.lines[1].txt, gTextPositions[1].x, gTextPositions[1].y);
-        if (gMeme.lines.length === 3) drawText(gMeme.lines[2].txt, gTextPositions[2].x, gTextPositions[2].y);
+        //on CR please explain to me why when using the next commented lines instead of "foreach", the addition of a third line erases the seconde line?
+        // drawText(gMeme.lines[0].txt, gTextPositions[0].x, gTextPositions[0].y);
+        // if (gMeme.lines.length === 2) drawText(gMeme.lines[1].txt, gMeme.lines[1].x, gMeme.lines[1].y);
+        // if (gMeme.lines.length === 3) drawText(gMeme.lines[2].txt, gMeme.lines[2].x, gMeme.lines[2].y);
+        gMeme.lines.forEach((line) => {
+            drawText(line.txt, line.x, line.y, line);
+        })
     }
 }
