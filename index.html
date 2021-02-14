@@ -30,22 +30,11 @@
 
         <div class="img-gallery-container flex column">
             <div class="filter-bar flex space-between align-center">
-                <input class="search" list="filters" placeholder="Search" oninput="onSearch(this.value)">
-                <div class="filter-words">
-                    <span style='font-size:18px' onclick="onSearch('funny',this)">funny</span>
-                    <span style='font-size:18px' onclick="onSearch('animal',this)">animal</span>
-                    <span style='font-size:18px' onclick="onSearch('man',this)">man</span>
-                    <span style='font-size:18px' onclick="onSearch('politics',this)">politics</span>
-                    <span style='font-size:18px' onclick="onSearch('sport',this)">sport</span>
-                    <span style='font-size:18px' onclick="onSearch('cute',this)">cute</span>
-                </div>
+                <input class="search" list="filters" placeholder="Search" oninput="onSearch(this)">
                 <datalist id="filters">
-                    <option value="funny">
-                    <option value="animal">
-                    <option value="man">
-                    <option value="politics">
-                    <option value="cute">
                 </datalist>
+                <ul class="filter-words clean-list flex align-center">
+                </ul>
             </div>
             <div class="img-grid-container"></div>
         </div>
@@ -152,6 +141,7 @@
 
     </script>
 
+    <script src="js/storage-service.js"></script>
     <script src="js/events-service.js"></script>
     <script src="js/meme-service.js"></script>
     <script src="js/share-service.js"></script>

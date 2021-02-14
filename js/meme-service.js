@@ -1,6 +1,15 @@
 'use strict';
+const MEMES = 'savedMemesDB';
+const WORDS = 'wordsSearchCountDB';
+var gKeywordsMap = {}
 
-// var gKeywords = { 'happy': 12, 'funny puk': 1 }
+function mapKeywords(gImgs){
+    gImgs.forEach((img)=>{
+        img.keywords.forEach((keyword)=>{
+            if (!Object.keys(gKeywordsMap).includes(keyword)) gKeywordsMap[keyword]=0;
+        });
+    });
+}
 
 var gImgs = [
     { id: 1, url: 'img/1.jpg', keywords: ['funny', 'politics', 'man'] },
@@ -183,4 +192,22 @@ function drawMeme(imgId) {
             drawText(line.txt, line.x, line.y, line);
         })
     }
+}
+
+
+function _saveMemesToStorage() {
+    saveToStorage(MEMES, gSavedMemes)
+}
+
+function _recreateSavedMemeGallery() {
+    var gSavedMemes = loadFromStorage(MEMES)
+    if (!gSavedMemes || !gSavedMemes.length) {
+        books = []
+        for (var i = 0; i < 16; i++) {
+            books.push(_createBook(`book${i}`, getRandomIntInclusive(1, 100), i))
+        }
+    }
+    gBooks = books;
+    console.log(gBooks);
+    _saveBooksToStorage();
 }

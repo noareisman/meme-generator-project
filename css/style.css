@@ -85,7 +85,7 @@ select{
     width:100%;
     /* max-height: 600px; */
     display: flex;
-    align-items: center;
+    /* align-items: center; */
     
 }    
 
@@ -105,7 +105,6 @@ canvas {
     background-color: #E3E3E3;
     margin: 0 auto;
     width: 375px;
-    height: 550px;
     }
 
     .menu{
@@ -303,14 +302,20 @@ ul{
 }
 
 .filter-words>*{
+    appearance: none;
+    height: fit-content;
+    padding: 0px;
     margin-inline-start: 50px;
     text-transform: capitalize;
+    border: none;
+    background: none;
 }
 
 .filter-words>*:hover{
     font-weight: bold;
     color: #FF7F00;
     cursor: pointer;
+
 }
 
 .search{

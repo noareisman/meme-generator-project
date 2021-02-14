@@ -16,6 +16,8 @@ function init() {
     gCtx.font = 'impact';
     gCurrImgList = gImgs;
     loadImgs();
+    mapKeywords(gImgs);
+    renderFilterNav();
     addListeners();
 }
 
@@ -28,13 +30,25 @@ function loadImgs() {
     elImgContainer.innerHTML = strHTML;
 }
 
-function onSearch(filter, elFilter) {
-    gCurrImgList = gImgs.filter(img => img.keywords.includes(filter));
-    console.log(gCurrImgList);
+function onSearch(filter) {
+    var val=filter.value;
+    gCurrImgList = gImgs.filter(img => img.keywords.includes(val));
+    gKeywordsMap[val]++;
+    renderFilterNav();
     loadImgs();
-    var newFontSize = parseInt(elFilter.style.fontSize.slice(0, elFilter.style.fontSize.indexOf('p')));
-    console.log(newFontSize);
-    elFilter.style.fontSize = `${newFontSize + 10}px`;
+}
+
+function renderFilterNav(){
+    var keywords=Object.keys(gKeywordsMap);
+    var strFilters='';
+    var strFilterWordsDisplay='';
+    keywords.forEach((keyword)=>{
+        console.log(keyword);
+        strFilters+=`<option value="${keyword}">`
+        strFilterWordsDisplay+=`<button value="${keyword}" style="font-size:${18+gKeywordsMap[keyword]*5}px" onclick="onSearch(this)">${keyword}</button>`
+    });
+    document.getElementById('filters').innerHTML=strFilters;
+    document.querySelector('.filter-words').innerHTML=strFilterWordsDisplay;
 }
 
 function addListeners() {
