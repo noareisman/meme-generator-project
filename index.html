@@ -18,7 +18,8 @@
                 <span class="logo"><img class="logoImg" src="logo/LOGO.png"></span>
                 <ul class="nav-bar clean-list flex">
                     <li onclick="onOpenGallery()"><a href="#">Gallery</a></li>
-                    <li onclick="onOpenMemeGenerator()"><a href="#">Memes</a></li>
+                    <li onclick="onOpenMemeGenerator()"><a href="#">Editor</a></li>
+                    <li onclick="onSavedMemesGallery()"><a href="#">Memes</a></li>
                     <li onclick="onOpenGallery()"><a href="#about">About</a></li>
                 </ul>
                 <div class="menu" onclick="toggleMenu()">☰</div>
@@ -27,6 +28,10 @@
     </header>
 
     <main class="main-content flex column">
+
+        <div class="saved-memes-gallery-container flex column" style="display:none">
+            <div class="saved-meme-grid-container"></div>
+        </div>
 
         <div class="img-gallery-container flex column">
             <div class="filter-bar flex space-between align-center">
@@ -91,9 +96,8 @@
                     <form action="" class="flex space-between" method="POST" enctype="multipart/form-data"
                         onsubmit="onShare(this, event)">
                         <input name="img" id="imgData" type="hidden" />
+                        <button class="save-btn" onclick="onSave(event)">Save</button>
                         <button class="btn" type="submit">Share</button>
-                        <!-- <a href="#" class="btn" onclick="downloadImg(this)" download="my-img.jpg">Download as jpeg</a> -->
-                        <div class="share-container"></div>
                         <button class="download-btn"><a href="#" class="download-btn-link" onclick="onDownload(this)"
                                 download="exported-data.jpg">Download</a></button>
                     </form>
@@ -141,6 +145,7 @@
 
     </script>
 
+    <script src="js/utils.js"></script>
     <script src="js/storage-service.js"></script>
     <script src="js/events-service.js"></script>
     <script src="js/meme-service.js"></script>

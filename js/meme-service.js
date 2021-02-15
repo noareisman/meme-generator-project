@@ -1,15 +1,10 @@
 'use strict';
 const MEMES = 'savedMemesDB';
 const WORDS = 'wordsSearchCountDB';
-var gKeywordsMap = {}
+var gKeywordsMap;
+var gSavedMemes;
+var gMeme;
 
-function mapKeywords(gImgs){
-    gImgs.forEach((img)=>{
-        img.keywords.forEach((keyword)=>{
-            if (!Object.keys(gKeywordsMap).includes(keyword)) gKeywordsMap[keyword]=0;
-        });
-    });
-}
 
 var gImgs = [
     { id: 1, url: 'img/1.jpg', keywords: ['funny', 'politics', 'man'] },
@@ -38,21 +33,25 @@ var gTextPositions = [
     { x: 250, y: 300 }
 ]
 
-var gMeme = {
-    selectedImgId: 0,
-    selectedLineIdx: 0,
-    lines: [
-        {
-            txt: '',
-            size: 50,
-            align: 'center',
-            color: 'white',
-            strokeColor: 'black',
-            font: 'impact',
-            x: 250,
-            y: 75
-        },
-    ]
+function createMeme(){ 
+    var meme = {
+        selectedImgId: 0,
+        selectedLineIdx: 0,
+        id: makeId(),
+        lines: [
+            {
+                txt: '',
+                size: 50,
+                align: 'center',
+                color: 'white',
+                strokeColor: 'black',
+                font: 'impact',
+                x: 250,
+                y: 75
+            },
+        ]
+    }
+    gMeme=meme;
 }
 function align(direction) {
     switch (direction) {
@@ -60,12 +59,12 @@ function align(direction) {
             gMeme.lines[gMeme.selectedLineIdx].align = 'start';
             gMeme.lines[gMeme.selectedLineIdx].x = 40;
             break;
-        case 'center':
-            gMeme.lines[gMeme.selectedLineIdx].align = 'center';
-            gMeme.lines[gMeme.selectedLineIdx].x = 250;
-            break;
-        case 'right':
-            gMeme.lines[gMeme.selectedLineIdx].align = 'end';
+            case 'center':
+                gMeme.lines[gMeme.selectedLineIdx].align = 'center';
+                gMeme.lines[gMeme.selectedLineIdx].x = 250;
+                break;
+                case 'right':
+                    gMeme.lines[gMeme.selectedLineIdx].align = 'end';
             gMeme.lines[gMeme.selectedLineIdx].x = 460;
             break;
     }
@@ -82,132 +81,164 @@ function moveLine(direction) {
 }
 
 // function markCurrLine() {
-//     drawRect(gMeme.lines[gMeme.selectedLineIdx].x, gMeme.lines[gMeme.selectedLineIdx].y)
-//     gTextPositions[gMeme.selectedLineIdx]
-// }
-
-// function drawRect(x, y) {
-//     gCtx.beginPath();
-//     gCtx.rect(x - 240, y - gMeme.lines[gMeme.selectedLineIdx].size, 530, gMeme.lines[gMeme.selectedLineIdx].size + 10);
-//     gCtx.strokeStyle = 'yellow';
-//     gCtx.stroke();
-// }
-
-function switchLines() {
-    if (gMeme.selectedLineIdx === (gMeme.lines.length) - 1) {
-        gMeme.selectedLineIdx = 0;
-    } else {
-        gMeme.selectedLineIdx++;
-    }
-    renderMeme()
-    document.querySelector('input[name=text]').value = gMeme.lines[gMeme.selectedLineIdx].txt;
-    // markCurrLine();
-}
-
-function addLine() {
-    if (gMeme.lines.length > 3) return;
-    createNewLine();
-    gMeme.selectedLineIdx++;
-    document.querySelector('input[name=text]').value = null;
-    renderMeme();
-    // markCurrLine();///////////////////////////////////////////////still have bugs here incase I erase a line or swich line before adding additional line( didn't have time to fix it)
-}
-
-function renderMeme() {
-    // clearCanvas();
-    drawMeme(gMeme.selectedImgId)
-}
-
-// function clearCanvas() {
-//     gCtx.clearRect(0, 0, gElCanvas.width, gElCanvas.height)
-// }
-
-function createNewLine() {
-    var newLine = {
-        txt: '',
-        size: 50,
-        align: 'center',
-        color: 'white',
-        strokeColor: 'black',
-        font: 'impact',
-        x: 250,
-        y: gTextPositions[gMeme.lines.length].y,
-        isDragging: false
-    }
-    gMeme.lines.push(newLine);
-}
-
-function drawText(text, x, y, line) {
-    gCtx.lineWidth = 2;
-    gCtx.fillStyle = `${line.color}`;
-    gCtx.strokeStyle = `${line.strokeColor}`;
-    gCtx.font = `${line.size}px ${line.font}`;
-    gCtx.textAlign = `${line.align}`;
-    gCtx.fillText(text, x, y);
-    gCtx.strokeText(text, x, y);
-}
-function updateTxt(elTxt) {
-    gMeme.lines[gMeme.selectedLineIdx].txt = elTxt;
-}
-
-function deleteLine() {
-    document.querySelector('input[name=text]').value = null;
-    gMeme.lines[gMeme.selectedLineIdx].txt = '';
-    renderMeme();
-}
-
-//    function getImgIdxById(imgId) {
-//     var imgIdx = gImgs.findIndex(function (currImg) {
-//         return (currImg.id.toString() === imgId);
-//     });
-//     gCurrImgIdx=imgIdx;
-//     return imgIdx;
-// }
-function changeFontSize(sign) {
-    var newFontSize = (sign === 'plus') ? gMeme.lines[gMeme.selectedLineIdx].size + 5 : gMeme.lines[gMeme.selectedLineIdx].size - 5;
-    gMeme.lines[gMeme.selectedLineIdx].size = newFontSize;
-    drawMeme(gMeme.selectedImgId)
-
-}
-
-
-///////////there is a bug here - need to fix it
-function updateColor(changedItem, color) {
-    if (changedItem === 'color') gMeme.lines[gMeme.selectedLineIdx].color = color;
-    if (changedItem === 'stroke') gMeme.lines[gMeme.selectedLineIdx].strokeColor = color;
-
-    renderMeme();
-}
-
-function drawMeme(imgId) {
-    const img = new Image();
-    img.src = `./img/${imgId}.jpg`;
-    img.onload = () => {
-        gCtx.drawImage(img, 0, 0, gElCanvas.width, gElCanvas.height) //img,x,y,xend,yend
-        //on CR please explain to me why when using the next commented lines instead of "foreach", the addition of a third line erases the seconde line?
-        // drawText(gMeme.lines[0].txt, gTextPositions[0].x, gTextPositions[0].y);
-        // if (gMeme.lines.length === 2) drawText(gMeme.lines[1].txt, gMeme.lines[1].x, gMeme.lines[1].y);
-        // if (gMeme.lines.length === 3) drawText(gMeme.lines[2].txt, gMeme.lines[2].x, gMeme.lines[2].y);
-        gMeme.lines.forEach((line) => {
-            drawText(line.txt, line.x, line.y, line);
-        })
-    }
-}
-
-
-function _saveMemesToStorage() {
-    saveToStorage(MEMES, gSavedMemes)
-}
-
-function _recreateSavedMemeGallery() {
-    var gSavedMemes = loadFromStorage(MEMES)
-    if (!gSavedMemes || !gSavedMemes.length) {
-        books = []
-        for (var i = 0; i < 16; i++) {
-            books.push(_createBook(`book${i}`, getRandomIntInclusive(1, 100), i))
+    //     drawRect(gMeme.lines[gMeme.selectedLineIdx].x, gMeme.lines[gMeme.selectedLineIdx].y)
+    //     gTextPositions[gMeme.selectedLineIdx]
+    // }
+    
+    // function drawRect(x, y) {
+        //     gCtx.beginPath();
+        //     gCtx.rect(x - 240, y - gMeme.lines[gMeme.selectedLineIdx].size, 530, gMeme.lines[gMeme.selectedLineIdx].size + 10);
+        //     gCtx.strokeStyle = 'yellow';
+        //     gCtx.stroke();
+        // }
+        
+        function switchLines() {
+            if (gMeme.selectedLineIdx === (gMeme.lines.length) - 1) {
+                gMeme.selectedLineIdx = 0;
+            } else {
+                gMeme.selectedLineIdx++;
+            }
+            renderMeme()
+            document.querySelector('input[name=text]').value = gMeme.lines[gMeme.selectedLineIdx].txt;
+            // markCurrLine();
         }
-    }
-    gBooks = books;
-    console.log(gBooks);
-    _saveBooksToStorage();
-}
+        
+        function addLine() {
+            if (gMeme.lines.length > 3) return;
+            createNewLine();
+            gMeme.selectedLineIdx++;
+            document.querySelector('input[name=text]').value = null;
+            renderMeme();
+            // markCurrLine();///////////////////////////////////////////////still have bugs here incase I erase a line or swich line before adding additional line( didn't have time to fix it)
+        }
+        
+        function renderMeme() {
+            // clearCanvas();
+            drawMeme(gMeme.selectedImgId)
+        }
+        
+        // function clearCanvas() {
+            //     gCtx.clearRect(0, 0, gElCanvas.width, gElCanvas.height)
+            // }
+            
+            function createNewLine() {
+                var newLine = {
+                    txt: '',
+                    size: 50,
+                    align: 'center',
+                    color: 'white',
+                    strokeColor: 'black',
+                    font: 'impact',
+                    x: 250,
+                    y: gTextPositions[gMeme.lines.length].y,
+                    isDragging: false
+                }
+                gMeme.lines.push(newLine);
+            }
+            
+            function drawText(text, x, y, line) {
+                gCtx.lineWidth = 2;
+                gCtx.fillStyle = `${line.color}`;
+                gCtx.strokeStyle = `${line.strokeColor}`;
+                gCtx.font = `${line.size}px ${line.font}`;
+                gCtx.textAlign = `${line.align}`;
+                gCtx.fillText(text, x, y);
+                gCtx.strokeText(text, x, y);
+            }
+            function updateTxt(elTxt) {
+                gMeme.lines[gMeme.selectedLineIdx].txt = elTxt;
+            }
+            
+            function deleteLine() {
+                document.querySelector('input[name=text]').value = null;
+                gMeme.lines[gMeme.selectedLineIdx].txt = '';
+                renderMeme();
+            }
+            
+            function getMemeIdxById(Id) {
+                var Idx = gSavedMemes.findIndex(function (currMeme) {
+                    return (currMeme.id.toString() === Id);
+                });
+                return Idx;
+            }
+            
+            function getMemeByIdx(idx){
+                gMeme=gSavedMemes[idx];
+            }
+            
+            function changeFontSize(sign) {
+                var newFontSize = (sign === 'plus') ? gMeme.lines[gMeme.selectedLineIdx].size + 5 : gMeme.lines[gMeme.selectedLineIdx].size - 5;
+                gMeme.lines[gMeme.selectedLineIdx].size = newFontSize;
+                drawMeme(gMeme.selectedImgId)
+                
+            }
+            
+            
+            ///////////there is a bug here - need to fix it
+            function updateColor(changedItem, color) {
+                if (changedItem === 'color') gMeme.lines[gMeme.selectedLineIdx].color = color;
+                if (changedItem === 'stroke') gMeme.lines[gMeme.selectedLineIdx].strokeColor = color;
+                
+                renderMeme();
+            }
+            
+            function drawMeme(imgId) {
+                const img = new Image();
+                img.src = `./img/${imgId}.jpg`;
+                img.onload = () => {
+                    gCtx.drawImage(img, 0, 0, gElCanvas.width, gElCanvas.height) //img,x,y,xend,yend
+                    //on CR please explain to me why when using the next commented lines instead of "foreach", the addition of a third line erases the seconde line?
+                    // drawText(gMeme.lines[0].txt, gTextPositions[0].x, gTextPositions[0].y);
+                    // if (gMeme.lines.length === 2) drawText(gMeme.lines[1].txt, gMeme.lines[1].x, gMeme.lines[1].y);
+                    // if (gMeme.lines.length === 3) drawText(gMeme.lines[2].txt, gMeme.lines[2].x, gMeme.lines[2].y);
+                    gMeme.lines.forEach((line) => {
+                        drawText(line.txt, line.x, line.y, line);
+                    })
+                }
+            }
+            
+            function save(){
+                gMeme.img=gElCanvas.toDataURL();
+                gSavedMemes.push(gMeme);
+                _saveMemesToStorage();
+            }
+            
+            function _saveMemesToStorage() {
+                saveToStorage(MEMES, gSavedMemes)
+            }
+            
+            function recreateSavedMemeGallery() {
+                gSavedMemes = loadFromStorage(MEMES)
+                if (!gSavedMemes || !gSavedMemes.length) {
+                    gSavedMemes = [];
+                }
+                _saveMemesToStorage()    
+            }
+            
+            function getSavedKeywordMap() {
+                gKeywordsMap = loadFromStorage(WORDS);
+                if (!gKeywordsMap || !gKeywordsMap.length) {
+                    gKeywordsMap=[];
+                    gKeywordsMap.push(mapKeywords(gImgs));
+                    _saveKeywordMapToStorage(); 
+                }
+                return gKeywordsMap;  
+            }
+            
+            function _saveKeywordMapToStorage(){
+                console.log(gKeywordsMap);
+                saveToStorage(WORDS,gKeywordsMap);
+                console.log(gKeywordsMap);
+            }
+            
+            function mapKeywords(gImgs){
+                var keywordsMap={};
+                gImgs.forEach((img)=>{
+                    img.keywords.forEach((keyword)=>{
+                        if (!Object.keys(keywordsMap).includes(keyword)) keywordsMap[keyword]=0;
+                    });
+                });
+                return keywordsMap;
+            }
+            
+            
